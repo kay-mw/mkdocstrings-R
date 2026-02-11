@@ -1,0 +1,32 @@
+[project]
+name = "mkdocstrings-r"
+version = "0.1.0"
+authors = [
+  { name="kay-mw" },
+]
+description = "Mkdocstring handler for R."
+readme = "README.md"
+requires-python = ">=3.14"
+classifiers = [
+  "Programming Language :: Python :: 3",
+]
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = [
+    "mkdocstrings>=1.0.3",
+]
+
+[build-system]
+requires = ["uv_build >= 0.9.26, <0.10.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = ["mkdocstrings_handlers.R"]
+
+
+[dependency-groups]
+dev = [
+    "copier>=9.11.3",
+    "copier-templates-extensions>=0.3.2",
+    "mkdocs>=1.6.1",
+]
