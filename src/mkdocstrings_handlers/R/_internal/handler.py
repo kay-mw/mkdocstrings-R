@@ -21,15 +21,16 @@ class RHandler(BaseHandler):
     extra_css: str = ""
     """Extra CSS."""
 
+    def __init__(self, handler_config, tool_config, **kwargs):
+        super().__init__(**kwargs)
+
     def collect(self, identifier, options):
-        logger.info(identifier)
-        logger.info(options)
+        logger.info(f"{identifier=}")
+        logger.info(f"{options=}")
         return {"a": 1}
 
     def render(self, data, options, locale=None) -> str:
-        logger.info(data)
-        logger.info(options)
-        logger.info(locale)
+        logger.info(f"{data=}")
 
         return "{'a': 1}"
 
@@ -37,5 +38,5 @@ class RHandler(BaseHandler):
         return local_options
 
 
-def get_handler(**kwargs):
-    return RHandler(**kwargs)
+def get_handler(handler_config, tool_config, **kwargs):
+    return RHandler(handler_config=handler_config, tool_config=tool_config, **kwargs)

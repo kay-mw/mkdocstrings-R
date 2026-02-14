@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = [
   { name="kay-mw" },
 ]
-description = "Mkdocstring handler for R."
+description = "Mkdocstrings handler for R."
 readme = "README.md"
 requires-python = ">=3.14"
 classifiers = [
@@ -26,7 +26,5 @@ module-name = ["mkdocstrings_handlers.R"]
 
 [dependency-groups]
 dev = [
-    "copier>=9.11.3",
-    "copier-templates-extensions>=0.3.2",
     "mkdocs>=1.6.1",
 ]
