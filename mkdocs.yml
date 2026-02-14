@@ -1,5 +1,19 @@
 site_name: My Docs
+watch:
+  - mkdocs.yml
+  - docs/
+  - src/
+
+site_url: https://claude.ai
+theme:
+  name: material
 
 plugins:
   - mkdocstrings:
       default_handler: R
+      handlers:
+        python:
+          paths:
+            - src
+          options:
+            docstring_style: google

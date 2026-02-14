@@ -14,6 +14,7 @@
 !docs/*.md
 
 !src/
+!src/python_google_showcase.py
 
 !src/mkdocstrings_handlers/
 
@@ -26,12 +27,11 @@
 !src/mkdocstrings_handlers/R/templates/
 
 !src/mkdocstrings_handlers/R/templates/material/
-
+!src/mkdocstrings_handlers/R/templates/material/*.html.jinja
 
 !tests/
 
 !tests/R/
 !tests/R/*.R
-
 
 

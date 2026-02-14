@@ -1,19 +1,19 @@
-# Welcome to MkDocs
+# mkdocstrings Visual Reference
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+This page renders both handlers side by side:
 
-## Commands
+- `python` for a broad Google-style example module.
+- `R` for your local handler output.
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## Python Handler
 
-## Project layout
+::: python_google_showcase
+    handler: python
+    options:
+      members: true
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## R Handler
 
-::: a
+::: tests.R.main
+    handler: R
+
