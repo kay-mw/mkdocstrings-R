@@ -19,7 +19,6 @@
           packages = with pkgs; [
             python313
             uv
-
             R
             radian
             rPackages.roxygen2
@@ -34,7 +33,7 @@
           shellHook = ''
             VENV=.venv
               if ! [ -d $VENV ]; then
-              uv venv $VENV --no-managed-python
+              uv venv .venv --no-managed-python
             fi
 
             source .venv/bin/activate

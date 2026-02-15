@@ -1,9 +1,13 @@
+import os
+
+# Quiet renv startup message
+os.environ["RENV_CONFIG_STARTUP_QUIET"] = "TRUE"
+
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, ClassVar
+from typing import Any, ClassVar, Mapping
 
-import rpy2.robjects.packages as rpackages
 from mkdocs.exceptions import PluginError
 from mkdocstrings import (
     BaseHandler,
@@ -12,6 +16,7 @@ from mkdocstrings import (
     HandlerOptions,
     get_logger,
 )
+from rpy2.robjects.packages import importr
 
 logger = get_logger(__name__)
 
@@ -77,7 +82,7 @@ class RHandler(BaseHandler):
                 f"Could not find {identifier} at path {str(file_path_ext)}"
             )
 
-        roxygen2 = rpackages.importr(
+        roxygen2 = importr(
             "roxygen2",
         )
         results = roxygen2.parse_file(str(file_path_ext))
@@ -144,7 +149,7 @@ class RHandler(BaseHandler):
             data=data,
         )
 
-    def get_options(self, local_options):
+    def get_options(self, local_options: Mapping[str, Any]):
         return local_options
 
 

@@ -6,15 +6,15 @@ authors = [
 ]
 description = "Mkdocstrings handler for R."
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.10,<3.14"
 classifiers = [
   "Programming Language :: Python :: 3",
 ]
 license = "MIT"
 license-files = ["LICENSE"]
 dependencies = [
-    "mkdocstrings>=1.0.3",
-    "rpy2>=3.6.4",
+    "mkdocstrings>=0.28.3",
+    "rpy2>=3.5.17,<3.6", # 3.6+ namespace version is broken on Linux
 ]
 
 [build-system]
@@ -27,9 +27,7 @@ module-name = ["mkdocstrings_handlers.R"]
 
 [dependency-groups]
 dev = [
-    "mkdocs>=1.6.1",
-    "mkdocs-material>=9.7.1",
-    "mkdocstrings-python>=2.0.2",
-    "tree-sitter>=0.25.2",
-    "tree-sitter-language-pack>=0.13.0",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings-python"
 ]
