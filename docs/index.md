@@ -7,6 +7,7 @@ This page renders both handlers side by side:
 
 ## Python Handler
 
+<!-- prettier-ignore-start -->
 ::: python_google_showcase
     handler: python
     options:
@@ -16,4 +17,4 @@ This page renders both handlers side by side:
 
 ::: tests.R.main
     handler: R
-
+<!-- prettier-ignore-end -->

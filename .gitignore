@@ -28,6 +28,7 @@
 
 !src/mkdocstrings_handlers/R/templates/material/
 !src/mkdocstrings_handlers/R/templates/material/*.html.jinja
+!src/mkdocstrings_handlers/R/templates/material/*.css
 
 !tests/
 

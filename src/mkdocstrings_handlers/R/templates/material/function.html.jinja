@@ -1,0 +1,46 @@
+{% for docstring in data.docstrings %}
+    {{ docstring.name|heading(heading_level=2, id=data.html_id) }}
+    {% if docstring.signature %}{{ docstring.signature|highlight(language="R") }}{% endif %}
+    {{ docstring.title|convert_markdown(heading_level=3) }}
+    {{ docstring.description|convert_markdown(heading_level=3) }}
+    {% if docstring.params %}
+        <span class="doc-section-title">Parameters:</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>{{ "Name" }}</th>
+                    <th>{{ "Description" }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for param in docstring.params %}
+                    <tr>
+                        <td>
+                            <code>{{ param.name }}</code>
+                        </td>
+                        <td>{{ param.description }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    {% if docstring.returns %}
+        <span class="doc-section-title">Returns:</span>
+        {{ docstring.returns|convert_markdown(heading_level=3) }}
+    {% endif %}
+    {% if docstring.examples %}
+        <span class="doc-section-title">Examples:</span>
+        {% for example in docstring.examples %}{{ example|highlight(language="R") }}{% endfor %}
+    {% endif %}
+    {% if docstring.source %}
+        <details class="mkdocstrings-source">
+            <summary>
+                <code>
+                    {{ "Source code in" }}
+                    {{ data.html_id }}
+                </code>
+            </summary>
+            {{ docstring.source|highlight(language="R") }}
+        </details>
+    {% endif %}
+{% endfor %}

@@ -17,15 +17,24 @@
         in
         pkgs.mkShell {
           packages = with pkgs; [
-            python314
+            python313
             uv
+
             R
             radian
+            rPackages.roxygen2
+
+            # For rpy2
+            zstd
+            xz
+            bzip2
+            zlib
+            icu
           ];
           shellHook = ''
             VENV=.venv
               if ! [ -d $VENV ]; then
-              uv venv .venv --no-managed-python
+              uv venv $VENV --no-managed-python
             fi
 
             source .venv/bin/activate
