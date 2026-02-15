@@ -65,15 +65,6 @@ class RHandler(BaseHandler):
         super().__init__(**kwargs)
 
     def collect(self, identifier: str, options: HandlerOptions) -> Data:
-        """
-        Some docstring.
-
-        Parameters:
-            identifier: The name of the person to greet.
-
-        Returns:
-            A greeting message.
-        """
         # TODO: Detect OS and use backslashes for Windows.
         file_path = Path(identifier.replace(".", "/"))
         file_path_ext = Path(f"{file_path}.R")

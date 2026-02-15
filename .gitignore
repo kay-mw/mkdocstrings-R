@@ -35,4 +35,8 @@
 !tests/R/
 !tests/R/*.R
 
+!.github/
+
+!.github/workflows/
+!.github/workflows/*.yml
 
