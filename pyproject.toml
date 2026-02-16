@@ -1,6 +1,6 @@
 [project]
 name = "mkdocstrings-r"
-version = "v0.1.1"
+version = "v0.1.2"
 authors = [
   { name="kay-mw" },
 ]

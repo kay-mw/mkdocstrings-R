@@ -109,7 +109,7 @@ class RHandler(BaseHandler):
                     param_description = tag.rx2("val").rx2("description")[0]
                     param = Param(name=param_name, description=param_description)
                     params.append(param)
-                elif tag_name.startswith("returns"):
+                elif tag_name.startswith("return"):
                     returns = tag_val
                 elif tag_name.startswith("examples"):
                     examples = tag_val.splitlines()
