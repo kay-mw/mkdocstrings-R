@@ -1,8 +1,9 @@
 {% for docstring in data.docstrings %}
     {{ docstring.name|heading(heading_level=2, id=data.html_id) }}
     {% if docstring.signature %}{{ docstring.signature|highlight(language="R") }}{% endif %}
-    {{ docstring.title|convert_markdown(heading_level=3) }}
-    {{ docstring.description|convert_markdown(heading_level=3) }}
+    {% if docstring.title %}{{ docstring.title|convert_markdown(heading_level=3) }}{% endif %}
+    {% if docstring.description %}{{ docstring.description|convert_markdown(heading_level=3) }}{% endif %}
+    {% if docstring.details %}{{ docstring.details|convert_markdown(heading_level=3) }}{% endif %}
     {% if docstring.params %}
         <span class="doc-section-title">Parameters:</span>
         <table>

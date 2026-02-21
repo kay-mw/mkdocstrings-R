@@ -34,6 +34,7 @@ class Docstring:
     signature: str
     title: str | None
     description: str | None
+    details: str | None
     params: list[Param]
     returns: str | None
     examples: list | None
@@ -94,6 +95,7 @@ class RHandler(BaseHandler):
             tags = result.rx2("tags")
             title = None
             description = None
+            details = None
             params: list[Param] = []
             returns = None
             examples = None
@@ -104,6 +106,8 @@ class RHandler(BaseHandler):
                     title = tag_val
                 elif tag_name.startswith("description"):
                     description = tag_val
+                elif tag_name.startswith("details"):
+                    details = tag_val
                 elif tag_name.startswith("param"):
                     param_name = tag.rx2("val").rx2("name")[0]
                     param_description = tag.rx2("val").rx2("description")[0]
@@ -120,6 +124,7 @@ class RHandler(BaseHandler):
                 signature=signature,
                 title=title,
                 description=description,
+                details=details,
                 params=params,
                 returns=returns,
                 examples=examples,

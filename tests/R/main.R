@@ -16,7 +16,12 @@ add <- function(x, y) {
 
 #' Subtract two numbers.
 #'
-#' A simple function that subtracts two numeric inputs.
+#' A simple function that subtracts two numeric inputs. It will
+#' add them using the following rules:
+#'
+#' 1. Rule 1
+#' 2. Rule 2
+#' 3. Rule 3
 #'
 #' @param x A numeric value.
 #' @param y A numeric value.

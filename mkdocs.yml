@@ -3,6 +3,7 @@ watch:
   - mkdocs.yml
   - docs/
   - src/
+  - tests/
 
 theme:
   name: material
