@@ -11,3 +11,6 @@ theme:
 plugins:
   - mkdocstrings:
       default_handler: R
+      handlers:
+        R:
+          lib_loc: "~/myrepos/using-mkdocstrings-R/renv/library/linux-nixos-xantusia/R-4.5/x86_64-pc-linux-gnu"

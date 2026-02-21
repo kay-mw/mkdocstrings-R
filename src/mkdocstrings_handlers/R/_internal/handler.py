@@ -32,6 +32,9 @@ def suppress_output():
         os.close(old_stderr_fd)
 
 
+# This import can produce a significant amount of R output, which looks very out of
+# place next to proper mkdocs logging. This redirects all R output to DEVNULL for the
+# duration of this import.
 with suppress_output():
     from rpy2.robjects.packages import importr
 
@@ -82,8 +85,20 @@ class RHandler(BaseHandler):
     def __init__(self, handler_config: dict | None, tool_config: Any, **kwargs):
         super().__init__(**kwargs)
 
+        self.lib_loc = None
+        """
+        The path/location of the R library. This library must contain roxygen2.
+        
+        `lib_loc` only needs to be set if ryp2 can't auto-detect your `lib_loc`. For
+        example, if your `renv/` folder isn't in the directory where you're running
+        mkdocs.
+
+        If you're unsure what your `lib_loc`(s) are, run `.libPaths()` in an R REPL.
+        """
+        if handler_config:
+            self.lib_loc = handler_config.get("lib_loc")
+
     def collect(self, identifier: str, options: HandlerOptions) -> Data:
-        # TODO: Detect OS and use backslashes for Windows.
         file_path = Path(identifier.replace(".", "/"))
         file_path_ext = Path(f"{file_path}.R")
         if not file_path_ext.exists():
@@ -93,6 +108,7 @@ class RHandler(BaseHandler):
 
         roxygen2 = importr(
             "roxygen2",
+            lib_loc=self.lib_loc,
         )
         results = roxygen2.parse_file(str(file_path_ext))
         docstrings: list[Docstring] = []
