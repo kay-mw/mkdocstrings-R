@@ -23,7 +23,7 @@ add <- function(x, y) {
 #' 2. Rule 2
 #' 3. Rule 3
 #'
-#' @param x A numeric value.
+#' @param x A numeric value, type `double`.
 #' @param y A numeric value.
 #'
 #' @returns A numeric value.

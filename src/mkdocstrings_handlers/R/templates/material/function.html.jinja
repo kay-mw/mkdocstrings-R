@@ -19,7 +19,7 @@
                         <td>
                             <code>{{ param.name }}</code>
                         </td>
-                        <td>{{ param.description }}</td>
+                        <td>{{ param.description|convert_markdown(heading_level=3) }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
