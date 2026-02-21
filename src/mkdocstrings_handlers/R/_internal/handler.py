@@ -1,9 +1,6 @@
 import os
-
-# Quiet renv startup message
-os.environ["RENV_CONFIG_STARTUP_QUIET"] = "TRUE"
-
 import re
+from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, ClassVar, Mapping
@@ -16,7 +13,27 @@ from mkdocstrings import (
     HandlerOptions,
     get_logger,
 )
-from rpy2.robjects.packages import importr
+
+
+@contextmanager
+def suppress_output():
+    old_stdout_fd = os.dup(1)
+    old_stderr_fd = os.dup(2)
+    devnull = os.open(os.devnull, os.O_WRONLY)
+    try:
+        os.dup2(devnull, 1)
+        os.dup2(devnull, 2)
+        os.close(devnull)
+        yield
+    finally:
+        os.dup2(old_stdout_fd, 1)
+        os.dup2(old_stderr_fd, 2)
+        os.close(old_stdout_fd)
+        os.close(old_stderr_fd)
+
+
+with suppress_output():
+    from rpy2.robjects.packages import importr
 
 logger = get_logger(__name__)
 
