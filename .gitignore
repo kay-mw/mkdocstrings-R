@@ -13,6 +13,9 @@
 !docs/
 !docs/*.md
 
+!static/
+!static/*.png
+
 !src/
 !src/python_google_showcase.py
 
