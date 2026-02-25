@@ -1,5 +1,5 @@
 {% for docstring in data.docstrings %}
-    {{ docstring.name|heading(heading_level=2, id=data.html_id) }}
+    {{ docstring.name|heading(heading_level=2, id=docstring.name) }}
     {% if docstring.signature %}{{ docstring.signature|highlight(language="R") }}{% endif %}
     {% if docstring.title %}{{ docstring.title|convert_markdown(heading_level=3) }}{% endif %}
     {% if docstring.description %}{{ docstring.description|convert_markdown(heading_level=3) }}{% endif %}
@@ -38,7 +38,7 @@
             <summary>
                 <code>
                     {{ "Source code in" }}
-                    {{ data.html_id }}
+                    {{ data.file_path }}
                 </code>
             </summary>
             {{ docstring.source|highlight(language="R") }}

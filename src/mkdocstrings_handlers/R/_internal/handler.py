@@ -63,7 +63,7 @@ class Docstring:
 @dataclass
 class Data:
     docstrings: list[Docstring]
-    html_id: str
+    file_path: str
 
 
 class RHandler(BaseHandler):
@@ -181,7 +181,7 @@ class RHandler(BaseHandler):
                 f" '{str(file_path_ext)}'"
             )
 
-        data = Data(docstrings=docstrings, html_id=str(file_path_ext))
+        data = Data(docstrings=docstrings, file_path=str(file_path_ext))
 
         return data
 
