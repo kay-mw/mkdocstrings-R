@@ -99,12 +99,21 @@ class RHandler(BaseHandler):
             self.lib_loc = handler_config.get("lib_loc")
 
     def collect(self, identifier: str, options: HandlerOptions) -> Data:
+        target_function_name = None
+
         file_path = Path(identifier.replace(".", "/"))
         file_path_ext = Path(f"{file_path}.R")
         if not file_path_ext.exists():
-            raise CollectionError(
-                f"Could not find {identifier} at path {str(file_path_ext)}"
-            )
+            # Check if identifier refers to a specific function rather than a file
+            file_path_parent = Path(f"{file_path_ext.parent}.R")
+            if not file_path_parent.exists():
+                raise CollectionError(
+                    f"Could not find '{identifier}' at '{str(file_path_ext)}', or"
+                    f" its parent '{str(file_path_parent)}'"
+                )
+
+            file_path_ext = file_path_parent
+            target_function_name = file_path.name
 
         roxygen2 = importr(
             "roxygen2",
@@ -114,14 +123,16 @@ class RHandler(BaseHandler):
         docstrings: list[Docstring] = []
         for _, result in results.items():
             name = str(result.rx2("object").rx2("topic")[0])
-            source = str(result.rx2("call"))
+            if target_function_name and target_function_name != name:
+                continue
 
+            source = str(result.rx2("call"))
             call = re.match(r"function\([^{]*", source)
             if call:
                 call = call.group(0).strip()
             else:
                 raise PluginError(
-                    f"Could not extract function signature for {identifier}"
+                    f"Could not extract function signature for '{identifier}'"
                 )
             signature = f"{name} <- {call}"
 
@@ -163,6 +174,12 @@ class RHandler(BaseHandler):
                 examples=examples,
             )
             docstrings.append(docstring)
+
+        if not docstrings:
+            raise CollectionError(
+                f"Could not find function '{target_function_name}' in file"
+                f" '{str(file_path_ext)}'"
+            )
 
         data = Data(docstrings=docstrings, html_id=str(file_path_ext))
 
