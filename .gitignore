@@ -17,8 +17,6 @@
 !static/*.png
 
 !src/
-!src/python_google_showcase.py
-
 !src/mkdocstrings_handlers/
 
 !src/mkdocstrings_handlers/R/
