@@ -32,9 +32,8 @@ def suppress_output():
         os.close(old_stderr_fd)
 
 
-# This import can produce a significant amount of R output, which looks very out of
-# place next to proper mkdocs logging. This redirects all R output to DEVNULL for the
-# duration of this import.
+# This import can produce R logs/messages, which is out of place next to proper mkdocs
+# logging. This redirects all R output to DEVNULL for the  duration of this import.
 with suppress_output():
     from rpy2.robjects.packages import importr
 
@@ -64,6 +63,55 @@ class Docstring:
 class Data:
     docstrings: list[Docstring]
     file_path: str
+
+
+def _extract_docstring(result: Any, name: str, identifier: str) -> Docstring:
+    """Parse a single roxygen2 result into a Docstring."""
+    source = str(result.rx2("call"))
+    call = re.match(r"function\([^{]*", source)
+    if call:
+        call = call.group(0).strip()
+    else:
+        raise PluginError(f"Could not extract function signature for '{identifier}'")
+    signature = f"{name} <- {call}"
+
+    tags = result.rx2("tags")
+    title = None
+    description = None
+    details = None
+    params: list[Param] = []
+    returns = None
+    examples = None
+    for tag in tags:
+        tag_name = str(tag.rx2("tag")[0])
+        tag_val = str(tag.rx2("val")[0])
+        if tag_name.startswith("title"):
+            title = tag_val
+        elif tag_name.startswith("description"):
+            description = tag_val
+        elif tag_name.startswith("details"):
+            details = tag_val
+        elif tag_name.startswith("param"):
+            param_name = tag.rx2("val").rx2("name")[0]
+            param_description = tag.rx2("val").rx2("description")[0]
+            param = Param(name=param_name, description=param_description)
+            params.append(param)
+        elif tag_name.startswith("return"):
+            returns = tag_val
+        elif tag_name.startswith("examples"):
+            examples = tag_val.splitlines()
+
+    return Docstring(
+        name=name,
+        source=source,
+        signature=signature,
+        title=title,
+        description=description,
+        details=details,
+        params=params,
+        returns=returns,
+        examples=examples,
+    )
 
 
 class RHandler(BaseHandler):
@@ -126,53 +174,7 @@ class RHandler(BaseHandler):
             if target_function_name and target_function_name != name:
                 continue
 
-            source = str(result.rx2("call"))
-            call = re.match(r"function\([^{]*", source)
-            if call:
-                call = call.group(0).strip()
-            else:
-                raise PluginError(
-                    f"Could not extract function signature for '{identifier}'"
-                )
-            signature = f"{name} <- {call}"
-
-            tags = result.rx2("tags")
-            title = None
-            description = None
-            details = None
-            params: list[Param] = []
-            returns = None
-            examples = None
-            for tag in tags:
-                tag_name = str(tag.rx2("tag")[0])
-                tag_val = str(tag.rx2("val")[0])
-                if tag_name.startswith("title"):
-                    title = tag_val
-                elif tag_name.startswith("description"):
-                    description = tag_val
-                elif tag_name.startswith("details"):
-                    details = tag_val
-                elif tag_name.startswith("param"):
-                    param_name = tag.rx2("val").rx2("name")[0]
-                    param_description = tag.rx2("val").rx2("description")[0]
-                    param = Param(name=param_name, description=param_description)
-                    params.append(param)
-                elif tag_name.startswith("return"):
-                    returns = tag_val
-                elif tag_name.startswith("examples"):
-                    examples = tag_val.splitlines()
-
-            docstring = Docstring(
-                name=name,
-                source=source,
-                signature=signature,
-                title=title,
-                description=description,
-                details=details,
-                params=params,
-                returns=returns,
-                examples=examples,
-            )
+            docstring = _extract_docstring(result, name, identifier)
             docstrings.append(docstring)
 
         if not docstrings:
