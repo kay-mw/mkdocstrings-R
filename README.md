@@ -81,14 +81,17 @@ block.
 
 ## Supported roxygen2 tags
 
-| Tag                    | Description                                                  |
-| ---------------------- | ------------------------------------------------------------ |
-| `@title`               | Function title (or the first line of the roxygen2 block)     |
-| `@description`         | Description paragraph (or the second paragraph of the block) |
-| `@details`             | Additional details section                                   |
-| `@param`               | Parameter name and description                               |
-| `@return` / `@returns` | Return value documentation                                   |
-| `@examples`            | Example code, rendered with R syntax highlighting            |
+- `@title`
+
+- `@description`
+
+- `@details`
+
+- `@param`
+
+- `@return` / `@returns`
+
+- `@examples`
 
 Markdown is supported within tag descriptions (e.g., inline code, lists, links).
 
