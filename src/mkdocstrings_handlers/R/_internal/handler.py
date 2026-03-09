@@ -35,6 +35,7 @@ def suppress_output():
 # This import can produce R logs/messages, which is out of place next to proper mkdocs
 # logging. This redirects all R output to DEVNULL for the  duration of this import.
 with suppress_output():
+    import rpy2.robjects as robjects
     from rpy2.robjects.packages import importr
 
 logger = get_logger(__name__)
@@ -162,6 +163,9 @@ class RHandler(BaseHandler):
 
             file_path_ext = file_path_parent
             target_function_name = file_path.name
+
+        if self.lib_loc:
+            robjects.r(f'.libPaths(c("{self.lib_loc}", .libPaths()))')
 
         roxygen2 = importr(
             "roxygen2",
