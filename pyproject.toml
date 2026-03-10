@@ -1,6 +1,6 @@
 [project]
 name = "mkdocstrings-r"
-version = "v0.1.4"
+version = "v0.1.5"
 authors = [
   { name="kay-mw" },
 ]
@@ -29,5 +29,5 @@ module-name = ["mkdocstrings_handlers.R"]
 dev = [
     "mkdocs",
     "mkdocs-material",
-    "mkdocstrings-python"
+    "mkdocstrings-python",
 ]
