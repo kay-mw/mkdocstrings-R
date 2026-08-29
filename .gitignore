@@ -10,9 +10,6 @@
 !README.md
 !LICENSE
 
-!docs/
-!docs/*.md
-
 !static/
 !static/*.png
 
@@ -33,11 +30,27 @@
 
 !tests/
 
-!tests/R/
-!tests/R/*.R
+!tests/**/*.py
+
+!tests/renv/
+!tests/renv/.Rprofile
+!tests/renv/.Rbuildignore
+!tests/renv/renv.lock
+!tests/renv/DESCRIPTION
+!tests/renv/mkdocs.yml
+
+
+!tests/renv/R/
+!tests/renv/R/*.R
+
+!tests/renv/docs/
+!tests/renv/docs/*.md
+
+!tests/renv/renv/
+!tests/renv/renv/activate.R
+!tests/renv/renv/settings.json
 
 !.github/
 
 !.github/workflows/
 !.github/workflows/*.yml
-

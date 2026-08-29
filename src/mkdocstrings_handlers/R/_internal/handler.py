@@ -137,7 +137,7 @@ class RHandler(BaseHandler):
         self.lib_loc = None
         """
         The path/location of the R library. This library must contain roxygen2.
-        
+
         `lib_loc` only needs to be set if ryp2 can't auto-detect your `lib_loc`. For
         example, if your `renv/` folder isn't in the directory where you're running
         mkdocs.

@@ -2,7 +2,7 @@
   description = "mkdocstrings-R";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/c05d2232d2feaa4c7a07f1168606917402868195";
+    nixpkgs.url = "github:NixOS/nixpkgs/c27cdad491a991b11ed731760aa2ef8db0cb0410";
   };
 
   outputs =
@@ -20,8 +20,9 @@
             python313
             uv
             R
-            radian
-            rPackages.roxygen2
+            rPackages.renv
+            rPackages.languageserver
+            rPackages.lintr
 
             # For rpy2
             zstd
@@ -29,6 +30,9 @@
             bzip2
             zlib
             icu
+
+            libuv # For fs (in roxygen2 dependency tree)
+            libxml2 # For libxml (in roxygen2 dependency tree)
           ];
           shellHook = ''
             VENV=.venv

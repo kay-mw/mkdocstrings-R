@@ -1,0 +1,4 @@
+Package: mkdocstrings-renv-test
+Version: 0.0.0
+Suggests:
+    roxygen2
