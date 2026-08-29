@@ -30,6 +30,9 @@
             bzip2
             zlib
             icu
+
+            libuv # For fs (in roxygen2 dependency tree)
+            libxml2 # For libxml (in roxygen2 dependency tree)
           ];
           shellHook = ''
             VENV=.venv
