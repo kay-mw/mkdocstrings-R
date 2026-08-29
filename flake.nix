@@ -2,7 +2,7 @@
   description = "mkdocstrings-R";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/c05d2232d2feaa4c7a07f1168606917402868195";
+    nixpkgs.url = "github:NixOS/nixpkgs/c27cdad491a991b11ed731760aa2ef8db0cb0410";
   };
 
   outputs =
@@ -21,7 +21,7 @@
             uv
             R
             radian
-            rPackages.roxygen2
+            rPackages.renv
 
             # For rpy2
             zstd
