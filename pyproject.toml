@@ -27,7 +27,8 @@ module-name = ["mkdocstrings_handlers.R"]
 
 [dependency-groups]
 dev = [
-    "mkdocs",
+    "mkdocs<2.0",
     "mkdocs-material",
     "mkdocstrings-python",
+    "zensical>=0.0.57",
 ]

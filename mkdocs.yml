@@ -1,7 +1,5 @@
 site_name: My Docs
 watch:
-  - mkdocs.yml
-  - docs/
   - src/
   - tests/
 
