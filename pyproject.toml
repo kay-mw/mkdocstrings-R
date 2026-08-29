@@ -24,6 +24,8 @@ build-backend = "uv_build"
 [tool.uv.build-backend]
 module-name = ["mkdocstrings_handlers.R"]
 
+[tool.ruff.lint.per-file-ignores]
+"src/mkdocstrings_handlers/R/**" = ["N999"]
 
 [dependency-groups]
 dev = [

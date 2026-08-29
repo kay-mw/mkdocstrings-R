@@ -25,9 +25,6 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Set up Python
-        run: uv python install 3.13
-
       - name: Build
         run: uv build
 

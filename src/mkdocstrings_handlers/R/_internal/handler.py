@@ -1,9 +1,10 @@
 import os
 import re
+from collections.abc import Mapping
 from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, ClassVar, Mapping
+from typing import Any, ClassVar
 
 from mkdocs.exceptions import PluginError
 from mkdocstrings import (
@@ -35,7 +36,7 @@ def suppress_output():
 # This import can produce R logs/messages, which is out of place next to proper mkdocs
 # logging. This redirects all R output to DEVNULL for the  duration of this import.
 with suppress_output():
-    import rpy2.robjects as robjects
+    from rpy2 import robjects
     from rpy2.robjects.packages import importr
 
 logger = get_logger(__name__)
@@ -157,8 +158,8 @@ class RHandler(BaseHandler):
             file_path_parent = Path(f"{file_path_ext.parent}.R")
             if not file_path_parent.exists():
                 raise CollectionError(
-                    f"Could not find '{identifier}' at '{str(file_path_ext)}', or"
-                    f" its parent '{str(file_path_parent)}'"
+                    f"Could not find '{identifier}' at '{file_path_ext!s}', or"
+                    f" its parent '{file_path_parent!s}'"
                 )
 
             file_path_ext = file_path_parent
@@ -173,7 +174,7 @@ class RHandler(BaseHandler):
         )
         results = roxygen2.parse_file(str(file_path_ext))
         docstrings: list[Docstring] = []
-        for _, result in results.items():
+        for _, result in results.items():  # noqa: PERF102 - this is not a dict
             name = str(result.rx2("object").rx2("topic")[0])
             if target_function_name and target_function_name != name:
                 continue
@@ -184,7 +185,7 @@ class RHandler(BaseHandler):
         if not docstrings:
             raise CollectionError(
                 f"Could not find function '{target_function_name}' in file"
-                f" '{str(file_path_ext)}'"
+                f" '{file_path_ext!s}'"
             )
 
         data = Data(docstrings=docstrings, file_path=str(file_path_ext))
