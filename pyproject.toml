@@ -27,8 +27,16 @@ module-name = ["mkdocstrings_handlers.R"]
 
 [dependency-groups]
 dev = [
-    "mkdocs<2.0",
-    "mkdocs-material",
-    "mkdocstrings-python",
+    "ruff>=0.16.5",
+]
+test = [
+    "beautifulsoup4>=4.15.0",
+    "mkdocs>=1.6.1,<2.0", # 2.0 plans to remove plugin support
+    "mkdocs-material>=9.7.1",
+    "mkdocstrings-python>=2.0.7",
+    "pytest>=9.1.1",
     "zensical>=0.0.57",
 ]
+
+[tool.uv]
+default-groups = "all"

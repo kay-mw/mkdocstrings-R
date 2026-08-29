@@ -1,7 +1,4 @@
 site_name: My Docs
-watch:
-  - src/
-  - tests/
 
 theme:
   name: material
