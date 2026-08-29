@@ -20,8 +20,9 @@
             python313
             uv
             R
-            radian
             rPackages.renv
+            rPackages.languageserver
+            rPackages.lintr
 
             # For rpy2
             zstd
